@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">CxelTvPlayer</string>
+    <string-array name="tv_menu_name">
+        <item>Home</item>
+        <item>Source</item>
+        <item>Picture</item>
+        <item>Sound</item>
+        <item>Channel</item>
+        <item>PC Adjust</item>
+        <item>Setting</item>
+        <item>Time</item>
+    </string-array>
 </resources>

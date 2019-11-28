@@ -8,7 +8,6 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/tv_menu_list"
-        android:background="#ffaacc"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

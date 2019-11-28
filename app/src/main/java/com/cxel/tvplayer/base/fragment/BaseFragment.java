@@ -10,6 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.view.menu.MenuView;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public abstract class BaseFragment extends Fragment {
     private View mView;
@@ -28,16 +30,29 @@ public abstract class BaseFragment extends Fragment {
                 parent.removeView(mView);
             }
         } else {
-            mView =inflater.inflate(getLayoutId(),container,false);
+            mView = inflater.inflate(getLayoutId(), container, false);
             initViews(mView);
-            initData();
+            //initData();
         }
         return mView;
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        initData();
+    }
+
     protected abstract int getLayoutId();
+
     protected abstract void initViews(View root);
-    protected void initData() {}
+
+    protected void initData() {
+    }
+
+    protected RecyclerView.LayoutManager getLayoutManager() {
+        return new LinearLayoutManager(this.getActivity(), RecyclerView.HORIZONTAL, false);
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

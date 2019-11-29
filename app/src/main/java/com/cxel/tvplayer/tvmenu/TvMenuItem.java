@@ -1,15 +1,10 @@
 package com.cxel.tvplayer.tvmenu;
 
 import android.content.Context;
-import android.util.AttributeSet;
-import android.util.Log;
-import android.widget.LinearLayout;
 
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.cxel.tvplayer.channel.ChannelFragment;
-import com.cxel.tvplayer.manager.ControlManager;
 import com.cxel.tvplayer.picture.PictureModeFragment;
 import com.cxel.tvplayer.setting.SettingFragment;
 import com.cxel.tvplayer.sound.SoundModeFragment;
@@ -54,7 +49,7 @@ public class TvMenuItem {
             default:
                 break;
         }
-        if(mClass != null) {
+        if (mClass != null) {
             mTag = mClass.getName();
         }
     }

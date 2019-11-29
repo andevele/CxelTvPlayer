@@ -18,19 +18,19 @@ public abstract class TvBaseFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        Log.d("zhulf","===700==onAttach");
+        Log.d("zhulf", "===700==onAttach");
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("zhulf","===701==onCreate");
+        Log.d("zhulf", "===701==onCreate");
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Log.d("zhulf","===702==onCreateView");
+        Log.d("zhulf", "===702==onCreateView");
         if (mView != null) {
             ViewGroup parent = (ViewGroup) mView.getParent();
             if (parent != null) {
@@ -54,24 +54,24 @@ public abstract class TvBaseFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Log.d("zhulf","====703==onActivityCreated: " + this);
+        Log.d("zhulf", "====703==onActivityCreated: " + this);
     }
 
     @Override
     public void onResume() {
-        Log.d("zhulf","======704===onResume");
+        Log.d("zhulf", "======704===onResume");
         super.onResume();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.d("zhulf","======705===onDestroy");
+        Log.d("zhulf", "======705===onDestroy");
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        Log.d("zhulf","======706====onDetach");
+        Log.d("zhulf", "======706====onDetach");
     }
 }

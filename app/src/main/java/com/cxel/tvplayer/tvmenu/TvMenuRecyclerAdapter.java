@@ -31,8 +31,8 @@ public class TvMenuRecyclerAdapter extends RecyclerView.Adapter {
     }
 
     public void setData(List<TvMenuBean> list) {
-        if(list == null) {
-            Log.d(TAG,"tv menu list is null");
+        if (list == null) {
+            Log.d(TAG, "tv menu list is null");
             return;
         }
         this.dataList.addAll(list);
@@ -60,16 +60,16 @@ public class TvMenuRecyclerAdapter extends RecyclerView.Adapter {
         viewHolder.itemlayout.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean hasFocus) {
-                if(focusChangeListener != null) {
-                    focusChangeListener.onFocusChange(view,hasFocus,1.1f,1.1f);
+                if (focusChangeListener != null) {
+                    focusChangeListener.onFocusChange(view, hasFocus, 1.1f, 1.1f);
                 }
             }
         });
         viewHolder.itemlayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                RecyclerView.ViewHolder holder = (RecyclerView.ViewHolder)view.getTag();
-                onItemClickListener.onItemClick(position,dataList.get(position).getName());
+                RecyclerView.ViewHolder holder = (RecyclerView.ViewHolder) view.getTag();
+                onItemClickListener.onItemClick(position, dataList.get(position).getName());
             }
         });
     }
@@ -80,7 +80,7 @@ public class TvMenuRecyclerAdapter extends RecyclerView.Adapter {
     }
 
     public interface OnItemClickListener {
-        void onItemClick(int position,String name);
+        void onItemClick(int position, String name);
     }
 
     public interface OnItemLongClickListener {

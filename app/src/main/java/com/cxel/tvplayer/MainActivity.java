@@ -1,9 +1,9 @@
 package com.cxel.tvplayer;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
 import android.os.Bundle;
+import android.view.KeyEvent;
 
 import com.cxel.tvplayer.base.activity.BaseActivity;
 import com.cxel.tvplayer.tvmenu.TvMenuFragment;
@@ -17,7 +17,19 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         FragmentManager fragmentManager = getSupportFragmentManager();
-        tvMenuFragment = (TvMenuFragment)fragmentManager.findFragmentById(R.id.tv_menu);
-        tvMenuFragment.setUp(this,fragmentManager,R.id.main_container);
+        tvMenuFragment = (TvMenuFragment) fragmentManager.findFragmentById(R.id.tv_menu);
+        tvMenuFragment.setUp(this, fragmentManager, R.id.main_container);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_MENU) {
+            if (tvMenuFragment.isVisible()) {
+                tvMenuFragment.hide();
+            } else {
+                tvMenuFragment.show();
+            }
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

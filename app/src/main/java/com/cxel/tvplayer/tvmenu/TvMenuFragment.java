@@ -1,7 +1,6 @@
 package com.cxel.tvplayer.tvmenu;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 
 import androidx.fragment.app.Fragment;
@@ -12,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cxel.tvplayer.MainApplication;
 import com.cxel.tvplayer.R;
+import com.cxel.tvplayer.base.fragment.TvBaseFragment;
 import com.cxel.tvplayer.manager.ControlManager;
 import com.cxel.tvplayer.base.fragment.BaseFragment;
 import com.cxel.tvplayer.util.Constant;
@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TvMenuFragment extends BaseFragment implements
-TvMenuRecyclerAdapter.OnItemClickListener,TvMenuRecyclerAdapter.OnItemFocusChangeListener{
+        TvMenuRecyclerAdapter.OnItemClickListener, TvMenuRecyclerAdapter.OnItemFocusChangeListener {
     private TvMenuRecyclerAdapter mAdapter;
     private RecyclerView recyclerView;
     private List<TvMenuItem> tvMenuItemList = new ArrayList<TvMenuItem>();
@@ -51,7 +51,7 @@ TvMenuRecyclerAdapter.OnItemClickListener,TvMenuRecyclerAdapter.OnItemFocusChang
     private void clearOldFragment() {
         FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
         List<Fragment> fragments = mFragmentManager.getFragments();
-        if(fragmentTransaction == null || fragments == null || fragments.size() == 0) {
+        if (fragmentTransaction == null || fragments == null || fragments.size() == 0) {
             return;
         }
         boolean isCommit = false;
@@ -61,7 +61,7 @@ TvMenuRecyclerAdapter.OnItemClickListener,TvMenuRecyclerAdapter.OnItemFocusChang
                 isCommit = true;
             }
         }
-        if(isCommit) {
+        if (isCommit) {
             fragmentTransaction.commitNow();
         }
     }
@@ -80,17 +80,17 @@ TvMenuRecyclerAdapter.OnItemClickListener,TvMenuRecyclerAdapter.OnItemFocusChang
         mAdapter.setOnItemFocusChangeListener(this);
         recyclerView.setAdapter(mAdapter);
         recyclerView.addItemDecoration(new TvMeuItemDecoration(getActivity(), LinearLayoutManager.HORIZONTAL,
-                0,0));
+                0, 0));
         MainApplication mainApplication = (MainApplication) getActivity().getApplication();
         List<TvMenuBean> list = mainApplication.getDataMap().get(CACHE_KEY);
-        if(list == null || list.size() < 0) {
+        if (list == null || list.size() < 0) {
             String[] tvMenuName = getActivity().getResources().getStringArray(R.array.tv_menu_name);
             List<TvMenuBean> tempList = new ArrayList<TvMenuBean>();
-            for(int i = 0;i < TV_MENU_ITEM_COUNT; i++) {
+            for (int i = 0; i < TV_MENU_ITEM_COUNT; i++) {
                 TvMenuBean tvMenuBean = new TvMenuBean();
                 tvMenuBean.setName(tvMenuName[i]);
                 tvMenuBean.setImageId(tvMenuImages[i]);
-                tempList.add(i,tvMenuBean);
+                tempList.add(i, tvMenuBean);
             }
             mAdapter.clearData();
             mAdapter.setData(tempList);
@@ -105,10 +105,10 @@ TvMenuRecyclerAdapter.OnItemClickListener,TvMenuRecyclerAdapter.OnItemFocusChang
 
     private void createTvMenuItemFragment(List<TvMenuBean> list) {
         List<TvMenuItem> menuItemList = new ArrayList<>();
-        for(int i = 0;i < TV_MENU_ITEM_COUNT; i++) {
+        for (int i = 0; i < TV_MENU_ITEM_COUNT; i++) {
             TvMenuItem tvMenuItem = new TvMenuItem(getActivity());
             tvMenuItem.init(list.get(i).getName());
-            menuItemList.add(i,tvMenuItem);
+            menuItemList.add(i, tvMenuItem);
         }
         tvMenuItemList.addAll(menuItemList);
     }
@@ -118,7 +118,7 @@ TvMenuRecyclerAdapter.OnItemClickListener,TvMenuRecyclerAdapter.OnItemFocusChang
     }
 
     @Override
-    public void onItemClick(int position,String name) {
+    public void onItemClick(int position, String name) {
         switch (name) {
             case Constant.TV_MENU_HOME:
                 ControlManager.getInstance().goHomePage();
@@ -133,47 +133,65 @@ TvMenuRecyclerAdapter.OnItemClickListener,TvMenuRecyclerAdapter.OnItemFocusChang
             case Constant.TV_MENU_TIME:
                 doFragmentChanged(tvMenuItemList.get(position));
                 break;
-                default:break;
+            default:
+                break;
         }
     }
 
     @Override
     public void onFocusChange(View view, boolean hasFocus, float scaleX, float scaleY) {
-        ControlManager.getInstance().startAnimator(view,hasFocus,scaleX,scaleY);
+        ControlManager.getInstance().startAnimator(view, hasFocus, scaleX, scaleY);
     }
 
     private void doFragmentChanged(TvMenuItem newTvMenuItem) {
         TvMenuItem oldTvMenuItem = null;
-        if(currentTvMenuItem != null) {
+        if (currentTvMenuItem != null) {
             oldTvMenuItem = currentTvMenuItem;
-            if(oldTvMenuItem == newTvMenuItem) {
+            /*if(oldTvMenuItem == newTvMenuItem) {
                 return;
-            }
-
+            }*/
         }
-        doFragmentChanged(oldTvMenuItem,newTvMenuItem);
+        doFragmentChanged(oldTvMenuItem, newTvMenuItem);
         currentTvMenuItem = newTvMenuItem;
     }
 
     private void doFragmentChanged(TvMenuItem oldTvMenuItem, TvMenuItem newTvMenuItem) {
         FragmentTransaction ft = mFragmentManager.beginTransaction();
-        if(oldTvMenuItem != null) {
-            if(oldTvMenuItem.getFragment() != null) {
+        if (oldTvMenuItem != null) {
+            if (oldTvMenuItem.getFragment() != null) {
                 ft.detach(oldTvMenuItem.getFragment());
             }
         }
-        if(newTvMenuItem != null) {
-            if(newTvMenuItem.getFragment() == null) {
-                Log.d("zhulf","===600");
+        if (newTvMenuItem != null) {
+            if (newTvMenuItem.getFragment() == null) {
                 Fragment fragment = Fragment.instantiate(mContext,
-                        newTvMenuItem.getFragmentClass().getName(),null);
-                ft.add(mContainerId, fragment,newTvMenuItem.getTag());
+                        newTvMenuItem.getFragmentClass().getName(), null);
+                ft.add(mContainerId, fragment, newTvMenuItem.getTag());
                 newTvMenuItem.setFragment(fragment);
             } else {
-                Log.d("zhulf","======601");
                 ft.attach(newTvMenuItem.getFragment());
             }
         }
+        ft.hide(this);
         ft.commit();
     }
+
+    public void show() {
+        FragmentTransaction ft = mFragmentManager.beginTransaction();
+        List<Fragment> fragments = mFragmentManager.getFragments();
+        for (Fragment fragment : fragments) {
+            if (fragment instanceof TvBaseFragment) {
+                ft.detach(fragment);
+            }
+        }
+        ft.show(this);
+        ft.commit();
+    }
+
+    public void hide() {
+        FragmentTransaction ft = mFragmentManager.beginTransaction();
+        ft.hide(this);
+        ft.commit();
+    }
+
 }

@@ -109,6 +109,15 @@ public class ControlManager {
         startActivity(intent);
     }
 
+    public void goHomePage() {
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.addCategory(Intent.CATEGORY_DEFAULT);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+        startActivity(intent);
+    }
+
     public void startActivity(Intent intent) {
         MainApplication.getContext().startActivity(intent);
     }

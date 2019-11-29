@@ -46,12 +46,14 @@ public class TvMenuRecyclerAdapter extends RecyclerView.Adapter {
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new TvMenuViewHolder(LayoutInflater.from(mContext).inflate(
+        RecyclerView.ViewHolder holder = new TvMenuViewHolder(LayoutInflater.from(mContext).inflate(
                 R.layout.tv_menu_items, parent, false));
+        holder.itemView.setTag(holder);
+        return holder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         TvMenuViewHolder viewHolder = (TvMenuViewHolder) holder;
         viewHolder.icon.setImageResource(dataList.get(position).getImageId());
         viewHolder.name.setText(dataList.get(position).getName());
@@ -63,6 +65,13 @@ public class TvMenuRecyclerAdapter extends RecyclerView.Adapter {
                 }
             }
         });
+        viewHolder.itemlayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                RecyclerView.ViewHolder holder = (RecyclerView.ViewHolder)view.getTag();
+                onItemClickListener.onItemClick(position,dataList.get(position).getName());
+            }
+        });
     }
 
     @Override
@@ -71,7 +80,7 @@ public class TvMenuRecyclerAdapter extends RecyclerView.Adapter {
     }
 
     public interface OnItemClickListener {
-        void onItemClick(int position, long itemId);
+        void onItemClick(int position,String name);
     }
 
     public interface OnItemLongClickListener {

@@ -13,12 +13,15 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.cxel.tvplayer.manager.ControlManager;
+
 public abstract class BaseFragment extends Fragment {
     private View mView;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        ControlManager.getInstance();
     }
 
     @Nullable

@@ -7,15 +7,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cxel.tvplayer.MainApplication;
 import com.cxel.tvplayer.R;
-import com.cxel.tvplayer.tvmenu.TvMenuRecyclerAdapter;
+import com.cxel.tvplayer.manager.ControlManager;
 import com.cxel.tvplayer.base.fragment.BaseFragment;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 public class TvMenuFragment extends BaseFragment implements
-TvMenuRecyclerAdapter.OnItemClickListener{
+TvMenuRecyclerAdapter.OnItemClickListener,TvMenuRecyclerAdapter.OnItemFocusChangeListener{
     private TvMenuRecyclerAdapter mAdapter;
     private RecyclerView recyclerView;
     protected String CACHE_KEY = getClass().getName();
@@ -43,6 +42,7 @@ TvMenuRecyclerAdapter.OnItemClickListener{
     protected void initData() {
         mAdapter = getTvmenuAdapter();
         mAdapter.setOnItemClickListener(this);
+        mAdapter.setOnItemFocusChangeListener(this);
         recyclerView.setAdapter(mAdapter);
         recyclerView.addItemDecoration(new TvMeuItemDecoration(getActivity(), LinearLayoutManager.HORIZONTAL,
                 0,0));
@@ -72,5 +72,10 @@ TvMenuRecyclerAdapter.OnItemClickListener{
     @Override
     public void onItemClick(int position, long itemId) {
 
+    }
+
+    @Override
+    public void onFocusChange(View view, boolean hasFocus, float scaleX, float scaleY) {
+        ControlManager.getInstance().startAnimator(view,hasFocus,scaleX,scaleY);
     }
 }

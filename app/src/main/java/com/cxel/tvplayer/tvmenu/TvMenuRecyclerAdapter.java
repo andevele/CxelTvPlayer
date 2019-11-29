@@ -1,8 +1,6 @@
 package com.cxel.tvplayer.tvmenu;
 
 import android.content.Context;
-import android.graphics.drawable.Icon;
-import android.nfc.Tag;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +23,7 @@ public class TvMenuRecyclerAdapter extends RecyclerView.Adapter {
     private OnItemClickListener onItemClickListener;
     private OnItemLongClickListener onItemLongClickListener;
     private List<TvMenuBean> dataList;
+    private OnItemFocusChangeListener focusChangeListener;
 
     public TvMenuRecyclerAdapter(Context context) {
         this.dataList = new ArrayList<>();
@@ -59,7 +58,9 @@ public class TvMenuRecyclerAdapter extends RecyclerView.Adapter {
         viewHolder.itemlayout.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean hasFocus) {
-                Log.d("zhulf","====hasFocus" + hasFocus);
+                if(focusChangeListener != null) {
+                    focusChangeListener.onFocusChange(view,hasFocus,1.1f,1.1f);
+                }
             }
         });
     }
@@ -77,12 +78,20 @@ public class TvMenuRecyclerAdapter extends RecyclerView.Adapter {
         void onItemLongClick(int position, long itemId);
     }
 
+    public interface OnItemFocusChangeListener {
+        void onFocusChange(View view, boolean hasFocus, float scaleX, float scaleY);
+    }
+
     public void setOnItemClickListener(OnItemClickListener itemClickListener) {
         this.onItemClickListener = itemClickListener;
     }
 
     public void setOnItemLongClickListener(OnItemLongClickListener itemLongClickListener) {
         this.onItemLongClickListener = itemLongClickListener;
+    }
+
+    public void setOnItemFocusChangeListener(OnItemFocusChangeListener focusChangeListener) {
+        this.focusChangeListener = focusChangeListener;
     }
 
     public static class TvMenuViewHolder extends RecyclerView.ViewHolder {

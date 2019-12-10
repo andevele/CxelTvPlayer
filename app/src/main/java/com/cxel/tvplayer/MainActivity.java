@@ -3,7 +3,6 @@ package com.cxel.tvplayer;
 import androidx.fragment.app.FragmentManager;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 
 import com.cxel.tvplayer.base.activity.BaseActivity;

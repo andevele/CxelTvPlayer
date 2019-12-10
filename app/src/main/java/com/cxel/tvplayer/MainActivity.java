@@ -3,6 +3,7 @@ package com.cxel.tvplayer;
 import androidx.fragment.app.FragmentManager;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 
 import com.cxel.tvplayer.base.activity.BaseActivity;
@@ -24,10 +25,10 @@ public class MainActivity extends BaseActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_MENU) {
-            if (tvMenuFragment.isVisible()) {
-                tvMenuFragment.hide();
-            } else {
+            if (tvMenuFragment.isHidden()) {
                 tvMenuFragment.show();
+            } else {
+                tvMenuFragment.hide();
             }
         }
         return super.onKeyDown(keyCode, event);
